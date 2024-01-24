@@ -42,12 +42,13 @@ function removeFileExtension(fileName) {
 }
 
 function removeCharacter(fileName, character) {
+    console.log(fileName, " ::: ", character)
+    fileName = fileName.split(character)
     console.log(fileName)
-    fileName.split(character)
     fileName = fileName.map(x => {
         let first_letter = x.charAt(0).toUpperCase()
         return first_letter + x.slice(1)
     })
 
-    return fileNameWithoutCharacter.join(" ")
+    return fileName.join(" ")
 }
