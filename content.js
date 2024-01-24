@@ -6,12 +6,11 @@
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     console.log(message)
     // change the dom here?
-    var s = document.createElement('script');
-    s.src = chrome.runtime.getURL('swirly.js');
-    s.onload = function() { this.remove(); };
+    var script = document.createElement('script');
+    script.src = chrome.runtime.getURL('swirly.js');
+    script.onload = function() { this.remove(); };
     // see also "Dynamic values in the injected code" section in this answer
-    (document.head || document.documentElement).appendChild(s);
-    console.log("this is the big boy test")
+    (document.head || document.documentElement).appendChild(script);
     return true
 });
 
