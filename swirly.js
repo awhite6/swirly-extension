@@ -17,7 +17,7 @@ if (window.getSelection().toString().length > 0) {
     
     document.getElementById(elementId).value = fileName
   
-} else{
+} else {
     Array.from(inputElements).forEach(function (element) {
         let fileName = element.value
         if (fileName.includes("-")) {
@@ -26,6 +26,7 @@ if (window.getSelection().toString().length > 0) {
 
         if (fileName.includes("_")) {
             fileName = removeCharacter(fileName, "_")
+    	    console.log(fileName)
         }
 
         fileName = addDashToDates(fileName)
@@ -33,7 +34,9 @@ if (window.getSelection().toString().length > 0) {
         if (fileName.includes(".")) {
             fileName = removeFileExtension(fileName)
         }
-
+        
+        fileName = fileName.charAt(0).toUpperCase() + fileName.slice(1)
+        
         element.value = fileName
     });
 }
@@ -46,12 +49,19 @@ function removeFileExtension(fileName) {
 
 function removeCharacter(fileName, character) {
     fileName = fileName.split(character)
-    fileName = fileName.map(x => {
+    let newFileName = []
+    console.log(fileName)
+    fileName = fileName.forEach(x => {
+	if (x == ' ') {
+	    console.log("ya heard with perd")
+	    return
+	}
+	
         let first_letter = x.charAt(0).toUpperCase()
-        return first_letter + x.slice(1)
+        newFileName.push(first_letter + x.slice(1))
     })
 
-    return fileName.join(" ")
+    return newFileName.join(" ")
 }
 
 function addDashToDates(fileName) {
@@ -68,11 +78,8 @@ function addDashToDates(fileName) {
             if (!isNumber(fileName[j])) {
                 console.log("this ones the trouble maker", fileName[j])
                 break
-            }
-            console.log("hey i'm here!", fileName[j])
-            fileName[i] = fileName[i] + "-" + fileName[j]
+            }            fileName[i] = fileName[i] + "-" + fileName[j]
             fileName.splice(j, 1)
-            console.log("j iterator be like ", j)
             j -= 1
         }
     }
