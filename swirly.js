@@ -1,5 +1,12 @@
 var inputElements = document.getElementsByClassName("js-text-full")
 
+var dontCapitalize =
+  [ "about", "above", "across", "after", "against", "along", "amid", "among", "around", "at", "before", "behind", "below", "beneath", "beside", "between", "beyond", "but", "by",
+  "concerning", "despite", "down", "during", "except", "for", "from", "in", "inside", "into", "like", "near", "of", "off", "on", "onto", "out", "outside", "over", "past",
+  "regarding", "since", "through", "throughout", "to", "toward", "under", "underneath", "until", "up", "upon", "with", "within", "without", "the", "a", "an", "and", "but",
+  "or", "nor", "for", "so", "yet", "as", "if"]
+
+
 if (window.getSelection().toString().length > 0) {
     const elementId = document.activeElement.id
     let fileName = window.getSelection().toString()
@@ -14,9 +21,9 @@ if (window.getSelection().toString().length > 0) {
     if (fileName.includes("_")) {
         fileName = removeCharacter(fileName, "_")
     }
-    
+
     document.getElementById(elementId).value = fileName
-  
+
 } else {
     Array.from(inputElements).forEach(function (element) {
         let fileName = element.value
@@ -34,7 +41,7 @@ if (window.getSelection().toString().length > 0) {
         if (fileName.includes(".")) {
             fileName = removeFileExtension(fileName)
         }
-        
+
         fileName = fileName.charAt(0).toUpperCase() + fileName.slice(1)
         
         element.value = fileName
@@ -52,13 +59,18 @@ function removeCharacter(fileName, character) {
     let newFileName = []
     console.log(fileName)
     fileName = fileName.forEach(x => {
-	if (x == ' ') {
-	    console.log("ya heard with perd")
-	    return
-	}
-	
-        let first_letter = x.charAt(0).toUpperCase()
-        newFileName.push(first_letter + x.slice(1))
+    	if (x == ' ') {
+    	    console.log("Empty value -- skipping")
+    	    return
+    	}
+
+        if (dontCapitalize.includes(x.toLowerCase())) {
+            newFileName.push(x)
+
+        } else {
+            let first_letter = x.charAt(0).toUpperCase()
+            newFileName.push(first_letter + x.slice(1))
+        }
     })
 
     return newFileName.join(" ")
@@ -89,7 +101,7 @@ function addDashToDates(fileName) {
 }
 
 function isNumber(_string) {
-    
+
     if (isNaN(_string)) {
         return false
     }
